@@ -1,5 +1,5 @@
-interface UserValidate {
-    id: number;
-    name: string;
-    email: string;
+export interface UserValidate {
+  id: number;
+  name: string;
+  email: string;
 }

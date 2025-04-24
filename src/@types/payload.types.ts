@@ -1,6 +1,6 @@
 interface JwtPayload {
-    sub: number;
-    email: string;
+  sub: number;
+  email: string;
 }
 
 export { JwtPayload };

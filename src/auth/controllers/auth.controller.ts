@@ -6,35 +6,34 @@ import { LocalAuthGuard } from '../guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
 
-    constructor(
-        private authService : AuthService,
-        private userService : UserService 
-    ) {}
+  @Post('register')
+  async register(@Body() userDto: UserDto, @Res() res) {
+    const user = await this.userService.create(userDto);
 
-    @Post("register")
-    async register(@Body() userDto : UserDto, @Res() res? ) {
-        const user = await this.userService.create(userDto);
-        
-        if (!user) {
-            return res.status(400).json({message : "User not created"});
-        }
-
-        return res.status(201).json(user);
+    if (!user) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return res.status(400).json({ message: 'User not created' });
     }
 
-    @UseGuards(LocalAuthGuard)
-    @Post("login")
-    async login(@Req() req, @Res() res) {
-        const user = req.user;
+    return res.status(201).json(user);
+  }
 
-        if (!user) {
-            return res.status(400).json({message : "User not found"});
-        }
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(@Req() req, @Res() res) {
+    const user = req.user;
 
-        const token = await this.authService.login(user);
-
-        return res.status(200).json(token);
-        
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
     }
+
+    const token = await this.authService.login(user);
+
+    return res.status(200).json(token);
+  }
 }
