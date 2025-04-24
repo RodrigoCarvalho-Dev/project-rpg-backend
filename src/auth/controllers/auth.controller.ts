@@ -11,6 +11,7 @@ export class AuthController {
     private userService: UserService,
   ) {}
 
+  // POST /auth/register
   @Post('register')
   async register(@Body() userDto: UserDto, @Res() res) {
     const user = await this.userService.create(userDto);
@@ -23,6 +24,8 @@ export class AuthController {
     return res.status(201).json(user);
   }
 
+
+  // POST auth/login
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Req() req, @Res() res) {

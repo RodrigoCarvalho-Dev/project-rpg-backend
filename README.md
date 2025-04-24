@@ -5,7 +5,8 @@
 - GET /users/login
 Headers : {  "Authorization": "Bearer token" }
 Response : {
-  user
+  "email" : "userexemple@gmail.com"
+  "password" : "senha123"
 }
 
 - POST auth/login
@@ -24,4 +25,14 @@ Body : {
 }
 Response : {
   ""
+}
+
+## Envio de Emails
+
+- POST /mail/send
+Body : {
+  "to": "user@example.com",
+  "subject": "Confirmação de e-mail",
+  "html": "<h1>Olá!</h1><a href='...'>Confirmar</a>",
+  "text": "Olá! Confirme em: ..."
 }
